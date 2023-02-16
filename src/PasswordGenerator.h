@@ -2,10 +2,12 @@
 
 #include <vector>
 #include <string>
+#include <tuple>
 
 namespace password_generator {
 	class PasswordGenerator {
 		using arguments_t = std::vector<std::string>;
+		using key_value_t = std::pair<std::string, std::string>;
 
 	public:
 		PasswordGenerator() {};
@@ -22,7 +24,7 @@ namespace password_generator {
 			"--lower",
 			"--numbers",
 			"--special_char",
-			"--number",
+			"--number", //when no value we assume it's 1
 		};
 		//default options, can be changed by passing arguments into comandline
 		size_t length = 8;
@@ -30,10 +32,9 @@ namespace password_generator {
 		bool include_numbers = true;
 		bool include_special_char = false;
 		unsigned int number_of_passwords = 1;
-		//optional arguments
-		arguments_t args {};
 		//helepr methods
-		arguments_t get_arguments(int argn, char* argv[]); //argn to remember it's without first arg (because it's a name of the file
-		bool is_valid_arg(std::string arg);
+		void parse_arguments(int argc, char* argv[]);
+		key_value_t check_arg(std::string arg);
+		bool is_positive_number(const std::string &s);
 	};
 }
