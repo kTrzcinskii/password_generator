@@ -16,5 +16,10 @@ int main(int argc, char* argv[])
 		std::cout << "\nTry running the program again with valid arguments!\n";
 		exit(1);
 	}
+	catch (const std::domain_error& e)
+	{
+		std::cout << e.what() << "\n";
+		exit(1);
+	}
 	return 0;
 }
