@@ -26,7 +26,26 @@ namespace password_generator {
 		{
 			key_value_t key_val = check_arg(argv[i]);
 			std::cout << "key: " << key_val.first << ", val: " + key_val.second + "\n";
-			//TODO: parse args to class members values
+			if (key_val.first == "--length")
+			{
+				parse_numeric(key_val, DEFAULT_LENGTH_VALUE, length);
+			}
+			else if (key_val.first == "--only_lower")
+			{
+				parse_boolean(key_val, only_lower);
+			}
+			else if (key_val.first == "--include_numbers")
+			{
+				parse_boolean(key_val, include_numbers);
+			}
+			else if (key_val.first == "--include_special_char")
+			{
+				parse_boolean(key_val, include_special_char);
+			}
+			else if (key_val.first == "--number")
+			{
+				parse_numeric(key_val, DEFAUlT_NUM_OF_PASSWORDS, number_of_passwords);
+			}
 		}
 	}
 
@@ -74,6 +93,23 @@ namespace password_generator {
 			if (!isdigit(c)) return false;
 		}
 		return !s.empty();
+	}
+
+	void PasswordGenerator::parse_boolean(const key_value_t &key_val, bool& member)
+	{
+		if (key_val.second == "false") member = false;
+		else member = true;
+	}
+
+	void PasswordGenerator::parse_numeric(const key_value_t &key_val, unsigned int default_val, unsigned int& member)
+	{
+		if (key_val.second == "DEFAULT") member = default_val;
+		else member = static_cast<unsigned int>(std::stoi(key_val.second));
+	}
+	void PasswordGenerator::parse_numeric(const key_value_t &key_val, size_t default_val, size_t& member)
+	{
+		if (key_val.second == "DEFAULT") member = default_val;
+		else member = static_cast<size_t>(std::stoi(key_val.second));
 	}
 
 	void PasswordGenerator::generate()

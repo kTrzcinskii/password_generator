@@ -20,21 +20,27 @@ namespace password_generator {
 		//etc
 		//when value is bool when user pass --lower we asume value is true
 		const arguments_t POSSIBLE_ARGUMENTS = {
-			"--length", //when no value we assume it's 8
-			"--lower",
-			"--numbers",
-			"--special_char",
-			"--number", //when no value we assume it's 1
+			"--length",
+			"--only_lower",
+			"--include_numbers",
+			"--include_special_char",
+			"--number",
 		};
 		//default options, can be changed by passing arguments into comandline
-		size_t length = 8;
+		size_t length = DEFAULT_LENGTH_VALUE;
 		bool only_lower = false;
 		bool include_numbers = true;
 		bool include_special_char = false;
-		unsigned int number_of_passwords = 1;
+		unsigned int number_of_passwords = DEFAUlT_NUM_OF_PASSWORDS;
 		//helepr methods
 		void parse_arguments(int argc, char* argv[]);
 		key_value_t check_arg(std::string arg);
 		bool is_positive_number(const std::string &s);
+		void parse_boolean(const key_value_t &key_val, bool &member);
+		void parse_numeric(const key_value_t &key_val, unsigned int default_val, unsigned int &member);
+		void parse_numeric(const key_value_t &key_val, size_t default_val, size_t &member);
+		//constants
+		static constexpr size_t DEFAULT_LENGTH_VALUE = 8;
+		static constexpr unsigned int  DEFAUlT_NUM_OF_PASSWORDS = 1;
 	};
 }
