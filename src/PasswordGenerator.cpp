@@ -114,6 +114,47 @@ namespace password_generator {
 
 	void PasswordGenerator::generate()
 	{
-		//TODO
+		if (number_of_passwords == 1) std::cout << "Generated password:\n";
+		else std::cout << "Generated passwords:\n";
+		std::random_device rd;  // Seed the random number generator
+		std::mt19937 mt(rd()); // Use Mersenne Twister algorithm
+		for (unsigned int i = 0; i < number_of_passwords; i++)
+		{
+			std::string password{};
+			for (size_t j = 0; j < length; j++)
+			{
+				password += generate_single_char(mt);
+			}
+			std::cout << password << "\n";
+		}
+	}
+
+	char PasswordGenerator::generate_single_char(std::mt19937 &mt)
+	{
+		std::vector<Char_to_generate> options{LOWER};
+		if (!only_lower) options.push_back(UPPER);
+		if (include_numbers) options.push_back(NUMBER);
+		if (include_special_char) options.push_back(SPECIAL);
+		std::uniform_int_distribution<> get_rand_index(0, options.size() - 1);
+		int index = get_rand_index(mt);
+		std::uniform_int_distribution<> rand_lower('a', 'z');
+		std::uniform_int_distribution<> rand_upper('A', 'Z');
+		std::uniform_int_distribution<> rand_number('0', '9');
+		std::uniform_int_distribution<> rand_special(0, SPECIAL_CHARACTERS.size() - 1);
+		switch (options[index])
+		{
+		case LOWER:
+			return rand_lower(mt);
+		case UPPER:
+			return rand_upper(mt);
+		case NUMBER:
+			return rand_number(mt);
+		case SPECIAL:
+			return SPECIAL_CHARACTERS[rand_special(mt)];
+		default:
+			break;
+		}
+
+		throw std::domain_error("Something went wrong, try again later!");
 	}
 }
