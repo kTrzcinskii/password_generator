@@ -20,7 +20,7 @@ namespace password_generator {
 		//etc
 		//when value is bool when user pass --lower we asume value is true
 		const arguments_t POSSIBLE_ARGUMENTS = {
-			"--length",
+			"--length", //when no value we assume it's 8
 			"--lower",
 			"--numbers",
 			"--special_char",

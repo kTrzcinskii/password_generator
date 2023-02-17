@@ -46,10 +46,10 @@ namespace password_generator {
 				}
 				//now we have to check if the very next character is "="
 				if (arg[possible_arg.length()] != '=') break;
-				//we now it's "=", now we have to check if whats after "=" makes sense
+				//we know it's "=", now we have to check if whats after "=" makes sense
 				std::string value = arg.substr(possible_arg.length() + 1);
-				//only --number has numeric value
-				if (possible_arg == "--number")
+				//only --number and --length has numeric value
+				if (possible_arg == "--number" || possible_arg == "--length")
 				{
 					if (!is_positive_number(value)) throw std::invalid_argument("The value of " + possible_arg + " must be greater than 0");
 				}
